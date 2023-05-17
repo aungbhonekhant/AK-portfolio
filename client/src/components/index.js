@@ -1,0 +1,10 @@
+export { default as Nav } from "./Nav/Nav";
+export { default as Hero } from "./Hero/Hero";
+export { default as AboutComponent } from "./About/About";
+export { default as WorkComponent } from "./Work/Work";
+export { default as SkillComponent } from "./Skills/Skills";
+export { default as TestimonialComponent } from "./Teastimonial/Testimonial";
+export { default as FooterComponent } from "./Footer/Footer";
+export { default as NavigationDots } from "./NavigationDots";
+export { default as SocialMedia } from "./SocialMedia";
+export { default as CanvasLoader } from "./Loader/Loader";
