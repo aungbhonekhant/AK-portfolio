@@ -1,0 +1,19 @@
+# dependencies (any package)
+node_modules/
+
+# build output
+client/build/
+backend/dist/
+
+# env files (keep the template)
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
