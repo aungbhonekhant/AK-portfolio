@@ -1,7 +1,7 @@
 export default {
   name: "workExperience",
   title: "Work Experience",
-  type: "document",
+  type: "object",
   fields: [
     { name: "name", title: "name", type: "string" },
     {

@@ -4,5 +4,8 @@
 # compiled studio
 /dist
 
+# sanity cache
+/.sanity
+
 # logs
 *.log

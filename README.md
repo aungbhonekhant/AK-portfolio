@@ -1,10 +1,10 @@
 # AK Portfolio
 
-Personal portfolio site. `client/` is the React site; `backend/` is the Sanity Studio (v2) that holds its content.
+Personal portfolio site. `client/` is the React site; `backend/` is the Sanity Studio (v6) that holds its content.
 
 ## Run locally
 
-Requires Node 18+ (tested on 22) and yarn 1 (`npm i -g yarn`).
+Requires Node 22.12+ and yarn 1 (`npm i -g yarn`).
 
 ```bash
 # Site — http://localhost:3000

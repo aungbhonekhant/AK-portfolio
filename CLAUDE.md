@@ -6,12 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Single-page personal portfolio for Aung Khant. Two independent packages, each with its own `node_modules` (no root `package.json`, no workspace tooling):
 
-- `client/` — Create React App (react-scripts 5, React 18). Renders the whole site and pulls all list content from Sanity at runtime.
-- `backend/` — Sanity Studio **v2** (legacy `sanity.json` + `part:` imports, React 17). It only defines content schemas and hosts the editing UI; there is no server code. Project `243wh60p`, dataset `production`.
+- `client/` — Create React App (react-scripts 5.0.1, the last CRA release) with React 19, react-three-fiber 9 / drei 10, styled-components 6, framer-motion. Renders the whole site and pulls all list content from Sanity at runtime.
+- `backend/` — Sanity Studio v6 (`sanity` package, configured in `sanity.config.js` / `sanity.cli.js`, Vite-based). It only defines content schemas and hosts the editing UI; there is no server code. Project `243wh60p`, dataset `production`. It was migrated from Studio v2, so ignore any v2 patterns you find online (`sanity.json`, `part:` imports, `createSchema`).
 
 ## Commands
 
-Both packages use **yarn** (classic, v1); `yarn.lock` is the source of truth in each. Don't use npm: it rewrites `yarn.lock` and hits a peer-dependency conflict (`react-tilt` declares React ≤16; it works on 18). Tested on Node 22.
+Both packages use **yarn** (classic, v1); `yarn.lock` is the source of truth in each. Don't use npm: it also rewrites `yarn.lock`. Sanity v6 requires Node ≥22.12.
 
 ```bash
 # client/  (first time: yarn install && cp .env.example .env)
@@ -21,13 +21,15 @@ yarn test            # Jest via react-scripts (watch mode); there are no test fi
 yarn test -t "name" --watchAll=false   # run a single test once
 
 # backend/  (first time: yarn install)
-yarn start           # sanity start: local Studio at http://localhost:3333 (needs a Sanity login)
-yarn build           # sanity build
+yarn start           # = yarn dev: sanity dev, Studio at http://localhost:3333 (needs a Sanity login)
+yarn build           # sanity build → backend/dist
+yarn lint            # ESLint (flat config, @sanity/eslint-config-studio)
+npx sanity schema validate   # check schemas without starting the Studio
 ```
 
-The `sanity` CLI comes from the local `@sanity/cli@^2` dev dependency, so no global install is needed. Don't upgrade it to v3: the Studio is v2.
+The `sanity` CLI ships with the `sanity` package; no global install is needed. In v6, `sanity start` is a deprecated alias for `sanity preview` (it serves a production build), which is why the `start` script points to `sanity dev`. Keep `typescript` on ~6.0: typescript-eslint (used by the lint config) doesn't support TypeScript 7 yet.
 
-Linting: the client uses CRA's built-in ESLint (`react-app` config), reported by `yarn start` / `yarn build`. `backend/.eslintrc` extends `@sanity/eslint-config-studio`.
+Linting: the client uses CRA's built-in ESLint (`react-app` config), reported by `yarn start` / `yarn build`. `backend/eslint.config.mjs` spreads `@sanity/eslint-config-studio`.
 
 ### Env vars (`client/.env`, gitignored; template in `client/.env.example`)
 
@@ -59,19 +61,19 @@ Inside sections, per-item animation uses the variant factories in `src/Utils/mot
 
 ### Styling / theme
 
-All styling is styled-components; there's no CSS framework, and `index.css` only does a reset and loads the font. `src/Utils/Theme.js` defines `modernTheme` (dark) and `modernLightTheme`. Use theme keys (`primary`, `secondary`, `tertiary`, `main` = cyan accent, `primaryBg`, `secondaryBg`, `softBlack`, `white`, …) through `${({ theme }) => theme.x}`. Shared primitives such as `AppContainer`, `HeadText`, `Ptext`, `BoldText`, background wrappers and gradients live in `components/globelStyle.js`. Breakpoints are hard-coded per file, commonly 450/500px (mobile), 940px (desktop nav) and 2000px (large screens).
+All styling is styled-components; there's no CSS framework, and `index.css` only does a reset and loads the font. `src/Utils/Theme.js` defines `modernTheme` (dark) and `modernLightTheme`. Use theme keys (`primary`, `secondary`, `tertiary`, `main` = cyan accent, `primaryBg`, `secondaryBg`, `softBlack`, `white`, …) through `${({ theme }) => theme.x}`. Shared primitives such as `AppContainer`, `HeadText`, `Ptext`, `BoldText`, background wrappers and gradients live in `components/globelStyle.js`. styled-components 6 forwards every prop to the DOM, so styling-only props must be transient (`$active`, `$toggle`). Breakpoints are hard-coded per file, commonly 450/500px (mobile), 940px (desktop nav) and 2000px (large screens).
 
 `App.js` keeps `darkMode` state, but nothing toggles it, so only the dark theme is ever used. Several colors are also hard-coded (the Nav background, the loader, `SocialMedia` icon color), so the light theme is incomplete.
 
 ### Hero / 3D
 
-`container/HeaderTwo` (`id="home"`, background image `assets/herobg1.png`) renders `Nav` and `components/Hero`. `Hero` is itself wrapped in `AppWrap(Hero, "home", HeroSection)`, so the hero gets its own social bar and nav dots, and the page ends up with two elements with `id="home"`. `Hero` renders `components/canvas/Computers`, a react-three-fiber `<Canvas>` (styled as `MyCanvas`) with `frameloop="demand"` and horizontal-only `OrbitControls`. It loads `public/sci_-_fi_computer_game_ready/scene.gltf` via `useGLTF`, and its scale and position change with `matchMedia` breakpoints (≤500px, 501–1279px). `components/Loader` shows load progress through drei's `useProgress`. `public/desktop_pc/` is an unused alternate model.
+`container/HeaderTwo` (`id="home"`, background image `assets/herobg1.png`) renders `Nav` and `components/Hero`. `Hero` is itself wrapped in `AppWrap(Hero, "home", HeroSection)`, so the hero gets its own social bar and nav dots, and the page ends up with two elements with `id="home"`. `Hero` renders `components/canvas/Computers`, a react-three-fiber `<Canvas>` (styled as `MyCanvas`) with `frameloop="demand"` and horizontal-only `OrbitControls`. It loads `public/sci_-_fi_computer_game_ready/scene.gltf` via `useGLTF`, and its scale and position change with `matchMedia` breakpoints (≤500px, 501–1279px). `components/Loader` shows load progress through drei's `useProgress`. It's rendered as plain DOM next to the `<Canvas>`, not as drei `<Html>` inside it: `<Html>` used as a Suspense fallback crashes under React 19. `public/desktop_pc/` is an unused alternate model.
 
 ## Sanity data flow
 
 `src/client.js` exports `client` (`@sanity/client`, `useCdn: true`, API version `2023-01-01`, empty token) and `urlFor(source)` (`@sanity/image-url`). Image fields are passed to `urlFor()` directly as `src`.
 
-Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or filters. The `_type` must equal the `name` in `backend/schemas/*.js`, and every type must be registered in `backend/schemas/schema.js`. File names don't always match type names:
+Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or filters. The `_type` must equal the `name` in `backend/schemas/*.js`, and every type must be listed in `schemaTypes` in `backend/schemas/index.js`. File names don't always match type names:
 
 | Schema file | `_type` | Fields used by client | Used in |
 |---|---|---|---|
@@ -83,11 +85,11 @@ Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or f
 | `brands.js` | `brands` | `name`, `imgUrl` | Testimonial |
 | `contact.js` | `contact` | `name`, `email`, `message` | Footer (write) |
 
-`workExperience` is declared as a `document` but is only used inline inside `experiences.works`. `tags[].color` is stored as hex without `#`, because the client prepends it.
+`workExperience` is an `object` type used only inline inside `experiences.works`. `tags[].color` is stored as hex without `#`, because the client prepends it.
 
 The contact form (`container/Footer`) first calls `client.create({ _type: "contact", … })` and only sends the EmailJS email inside its `.then`. The client has no token, and Sanity normally rejects unauthenticated writes. In that case the email is never sent, and since there's no `.catch`, the button stays on "Sending".
 
-To add a content type: create the schema in `backend/schemas/`, register it in `schema.js`, deploy or run the Studio, then query it from a container.
+To add a content type: create the schema in `backend/schemas/`, add it to `schemas/index.js`, deploy or run the Studio, then query it from a container.
 
 ## Known issues (found by reading the code)
 
