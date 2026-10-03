@@ -167,7 +167,7 @@ export const NavigationDotsStyle = styled.a`
   margin: 0.5rem;
 
   transition: background-color 0.2s ease-in-out;
-  background-color: ${({ active, theme }) => active && theme.main};
+  background-color: ${({ $active, theme }) => $active && theme.main};
 
   &:hover {
     background-color: ${({ theme }) => theme.main};

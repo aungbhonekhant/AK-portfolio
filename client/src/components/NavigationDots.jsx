@@ -9,7 +9,7 @@ const NavigationDots = ({ active }) => {
           <NavigationDotsStyle
             key={item + index}
             href={`#${item}`}
-            active={active === item}
+            $active={active === item}
           />
         )
       )}

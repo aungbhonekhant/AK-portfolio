@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import Tilt from "react-tilt";
+import { Tilt } from "react-tilt";
 
 import { HeadText, blackGradient } from "../../globelStyle";
 
@@ -39,8 +39,8 @@ export const WorkFilterItem = styled.div`
     border-radius: 0.85rem;
   }
 
-  border-color: ${({ active, theme }) => active && theme.main};
-  color: ${({ active, theme }) => active && theme.main};
+  border-color: ${({ $active, theme }) => $active && theme.main};
+  color: ${({ $active, theme }) => $active && theme.main};
 `;
 
 export const WorkPortfolio = styled.div`

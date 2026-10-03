@@ -101,7 +101,7 @@ const Work = () => {
         {["UI/UX", "Web App", "Mobile App", "React Js", "All"].map(
           (cat, index) => (
             <WorkComponent.FilterItem
-              active={activeFilter === cat}
+              $active={activeFilter === cat}
               key={index}
               onClick={() => handleWorkFilter(cat)}
             >

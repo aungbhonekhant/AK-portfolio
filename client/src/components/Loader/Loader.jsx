@@ -1,16 +1,23 @@
-import { Html, useProgress } from "@react-three/drei";
+import { useProgress } from "@react-three/drei";
 
+// Rendered as plain DOM next to the <Canvas> (not drei's <Html> inside it):
+// <Html> unmounts its own React root during commit, which React 19 rejects.
 const CanvasLoader = () => {
-  const { progress } = useProgress();
+  const { active, progress } = useProgress();
+  if (!active) return null;
+
   return (
-    <Html
-      as="div"
-      center
+    <div
       style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        pointerEvents: "none",
       }}
     >
       <span className="canvas-loader"></span>
@@ -24,7 +31,7 @@ const CanvasLoader = () => {
       >
         {progress.toFixed(2)}%
       </p>
-    </Html>
+    </div>
   );
 };
 

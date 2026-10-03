@@ -38,7 +38,7 @@ const Nav = () => {
           {navLinks.map((link) => (
             <MenuItem
               key={`nav-${link}`}
-              active={active === link}
+              $active={active === link}
               onClick={() => setActive(link)}
             >
               <a href={`#${link}`}>{link}</a>
@@ -53,7 +53,7 @@ const Nav = () => {
             onClick={() => setToggle(!toggle)}
           />
           <MobileNevContainer
-            toggle={toggle}
+            $toggle={toggle}
             initial={{ x: "100%" }}
             animate={{ x: toggle ? "0%" : "100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -61,7 +61,7 @@ const Nav = () => {
             <MobileMenu>
               {navLinks.map((link) => (
                 <MobileMenuItem
-                  active={active === link}
+                  $active={active === link}
                   onClick={() => {
                     setToggle(!toggle);
                     setActive(link);

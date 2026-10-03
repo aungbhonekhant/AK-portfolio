@@ -7,7 +7,6 @@ import {
   AppFlex,
   Ptext,
   BoldText,
-  blackGradient,
 } from "../../globelStyle";
 
 export const Nav = styled(AppFlex).attrs({ as: "nav" })`
@@ -85,7 +84,7 @@ export const MenuItem = styled.li`
 
   a {
     font-size: 18px;
-    color: ${({ active, theme }) => (active ? theme.main : theme.secondary)};
+    color: ${({ $active, theme }) => ($active ? theme.main : theme.secondary)};
     text-decoration: none;
     font-weight: 500;
 
@@ -123,10 +122,10 @@ export const MobileNev = styled.div`
   }
 `;
 
-export const MobileNevContainer = styled(motion.div).attrs({
-  as: blackGradient,
-})`
-  display: ${({ toggle }) => (toggle ? "flex" : "none")};
+export const MobileNevContainer = styled(motion.div)`
+  background: #000000;
+  background: linear-gradient(to right, #213335, #000000);
+  display: ${({ $toggle }) => ($toggle ? "flex" : "none")};
   padding: 1.5rem;
   position: absolute;
   top: 5rem;
@@ -153,7 +152,7 @@ export const MobileMenuItem = styled.li`
 
   a {
     font-size: 16px;
-    color: ${({ active, theme }) => (active ? theme.main : theme.secondary)};
+    color: ${({ $active, theme }) => ($active ? theme.main : theme.secondary)};
     text-decoration: none;
     font-weight: 500;
     text-transform: capitalize;
