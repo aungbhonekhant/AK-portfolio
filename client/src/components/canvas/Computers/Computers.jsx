@@ -31,18 +31,20 @@ const Computers = ({ isMobile, isTablet }) => {
   );
 };
 
+const MOBILE_QUERY = "(max-width: 500px)";
+const TABLET_QUERY = "(min-width: 501px) and (max-width: 1279px)";
+
 const ComputersCanvas = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia(MOBILE_QUERY).matches
+  );
+  const [isTablet, setIsTablet] = useState(
+    () => window.matchMedia(TABLET_QUERY).matches
+  );
 
   useEffect(() => {
-    const mobileQuery = window.matchMedia("(max-width: 500px)");
-    setIsMobile(mobileQuery.matches);
-
-    const tabletQuery = window.matchMedia(
-      "(min-width: 501px) and (max-width: 1279px)"
-    );
-    setIsTablet(tabletQuery.matches);
+    const mobileQuery = window.matchMedia(MOBILE_QUERY);
+    const tabletQuery = window.matchMedia(TABLET_QUERY);
 
     const handleMobileQueryChange = (event) => {
       setIsMobile(event.matches);

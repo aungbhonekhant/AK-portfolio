@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Single-page personal portfolio for Aung Khant. Two independent packages, each with its own `node_modules` (no root `package.json`, no workspace tooling):
 
-- `client/` — Create React App (react-scripts 5.0.1, the last CRA release) with React 19, react-three-fiber 9 / drei 10, styled-components 6, framer-motion. Renders the whole site and pulls all list content from Sanity at runtime.
+- `client/` — Vite 8 SPA (migrated from Create React App) with React 19, react-three-fiber 9 / drei 10, styled-components 6, framer-motion. Renders the whole site and pulls all list content from Sanity at runtime.
 - `backend/` — Sanity Studio v6 (`sanity` package, configured in `sanity.config.js` / `sanity.cli.js`, Vite-based). It only defines content schemas and hosts the editing UI; there is no server code. Project `243wh60p`, dataset `production`. It was migrated from Studio v2, so ignore any v2 patterns you find online (`sanity.json`, `part:` imports, `createSchema`).
 
 ## Commands
@@ -15,10 +15,12 @@ Both packages use **yarn** (classic, v1); `yarn.lock` is the source of truth in 
 
 ```bash
 # client/  (first time: yarn install && cp .env.example .env)
-yarn start           # dev server at http://localhost:3000
-yarn build           # production build to client/build
-yarn test            # Jest via react-scripts (watch mode); there are no test files yet
-yarn test -t "name" --watchAll=false   # run a single test once
+yarn start           # = yarn dev: Vite dev server at http://localhost:3000
+yarn build           # production build to client/build (Netlify publishes this folder)
+yarn preview         # serve the production build (use --port 3000 so Sanity CORS allows it)
+yarn lint            # ESLint flat config (eslint.config.js)
+yarn test            # Vitest (jsdom) in watch mode; there are no test files yet
+yarn test --run -t "name"   # run a single test once
 
 # backend/  (first time: yarn install)
 yarn start           # = yarn dev: sanity dev, Studio at http://localhost:3333 (needs a Sanity login)
@@ -29,18 +31,20 @@ npx sanity schema validate   # check schemas without starting the Studio
 
 The `sanity` CLI ships with the `sanity` package; no global install is needed. In v6, `sanity start` is a deprecated alias for `sanity preview` (it serves a production build), which is why the `start` script points to `sanity dev`. Keep `typescript` on ~6.0: typescript-eslint (used by the lint config) doesn't support TypeScript 7 yet.
 
-Linting: the client uses CRA's built-in ESLint (`react-app` config), reported by `yarn start` / `yarn build`. `backend/eslint.config.mjs` spreads `@sanity/eslint-config-studio`.
+Linting is a separate step in both packages; builds don't run it. `client/eslint.config.js` uses `@eslint/js`, `react-hooks` and `react-refresh`, with `AppWrap`/`MotionWrap` registered as `extraHOCs` so the wrapped section exports pass. `backend/eslint.config.mjs` spreads `@sanity/eslint-config-studio`.
+
+Vite-specific notes for the client: files containing JSX must use `.jsx`; `index.html` lives in `client/` (not `public/`) and loads `/src/index.jsx`; Vite's bundler fails on imports of names that don't exist (CRA only warned).
 
 ### Env vars (`client/.env`, gitignored; template in `client/.env.example`)
 
 - `REACT_APP_SANITY_PROJECT_ID=243wh60p`, used by `src/client.js`. The `production` dataset is publicly readable, and Sanity CORS allows `http://localhost:3000`, so the site loads real content locally with only this set.
 - `REACT_APP_EMAILJS_SERVICE_ID`, `REACT_APP_EMAILJS_TEMPLATE_ID`, `REACT_APP_EMAILJS_PUBLIC_KEY`, used by `container/Footer`. Only the contact form needs them.
 
-CRA reads `.env` only at startup, so restart `yarn start` after changing it.
+`vite.config.js` sets `envPrefix: "REACT_APP_"`, so the CRA-era names still work and Netlify's env settings didn't need to change. Read them with `import.meta.env.REACT_APP_*` (not `process.env`). They're inlined at build time; restart `yarn start` after editing `.env`.
 
 ## Client architecture
 
-`src/App.js` renders the sections in order: `HeaderTwo` → `About` → `Work` → `Skills` → `Testimonial` → `Footer`, inside a styled-components `ThemeProvider` and a `BrowserRouter`. The router has no routes; it exists only because `Nav`'s logo uses `<Link>`. Navigation is plain `#anchor` links. The anchor ids `home, about, work, skills, testimonials, contact` are hard-coded in both `components/Nav/Nav.jsx` and `components/NavigationDots.jsx`, and must match the `idName` passed to `AppWrap`.
+`src/App.jsx` renders the sections in order: `HeaderTwo` → `About` → `Work` → `Skills` → `Testimonial` → `Footer`, inside a styled-components `ThemeProvider` and a `BrowserRouter`. The router has no routes; it exists only because `Nav`'s logo uses `<Link>`. Navigation is plain `#anchor` links. The anchor ids `home, about, work, skills, testimonials, contact` are hard-coded in both `components/Nav/Nav.jsx` and `components/NavigationDots.jsx`, and must match the `idName` passed to `AppWrap`.
 
 ### Container / component split
 
@@ -98,4 +102,4 @@ To add a content type: create the schema in `backend/schemas/`, add it to `schem
 - `container/About`: the module-level `abouts` array (referencing nonexistent `images.about01`…) is dead code, shadowed by state.
 - Undefined theme keys: `theme.primry` (typo, `components/Work/style/Work.js`) and `theme.grayColor` (`globelStyle.js`).
 - `SocialMedia` icons are not links.
-- `React.StrictMode` is commented out in `src/index.js`.
+- `React.StrictMode` is commented out in `src/index.jsx`.

@@ -10,7 +10,6 @@ import {
   ExpItems,
   ExpName,
   ExpCompany,
-  ExpTooltip,
   ExpYearContainer,
   ExpYear,
   ExpWorkLists,
