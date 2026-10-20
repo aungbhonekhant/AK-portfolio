@@ -24,11 +24,10 @@ const PortfolioCard = ({
       viewport={{ once: true, amount: 0.25 }}
     >
       <WorkComponent.PortolioItemContainer
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
+        tiltMaxAngleX={45}
+        tiltMaxAngleY={45}
+        scale={1}
+        transitionSpeed={450}
       >
         <WorkComponent.PortfolioItemWarp>
           <WorkComponent.PortfolioItemImg src={urlFor(imgUrl)} alt={title} />

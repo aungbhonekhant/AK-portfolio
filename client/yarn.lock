@@ -2040,6 +2040,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-parallax-tilt@^1.7.348:
+  version "1.7.348"
+  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.348.tgz#209bb66417f11b06b642516c2c25814de955d920"
+  integrity sha512-u6UJjuESR0ogNv+PxhdeV2I20mnVcgfSu83wjVgGtEm1Yu19JkWnVjqWfBJHWrf5qk9fvfgPY3X/qwwbXqbimA==
+
 react-router-dom@^7.18.4:
   version "7.18.4"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-7.18.4.tgz#07b72b8aab2d80af847425107f966f1688c703d0"
@@ -2054,11 +2059,6 @@ react-router@7.18.4:
   dependencies:
     cookie "^1.0.1"
     set-cookie-parser "^2.6.0"
-
-react-tilt@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-tilt/-/react-tilt-1.0.2.tgz#89e1749939275204ebbc04565778abf972196cbe"
-  integrity sha512-21tUUsmuw5id/6NDtKqwYTG4taVnw+BoUwIG6YsgPC9GI6cx4BnBuSqgriQYAYcv3bdGNzecaBL+rvQRAm28bg==
 
 react-tooltip@^6.0.9:
   version "6.0.9"
