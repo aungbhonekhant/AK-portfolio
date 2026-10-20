@@ -40,8 +40,8 @@ const About = () => {
   return (
     <>
       <AboutComponent.HeadText>
-        <span> Code, Coffee, and Creativity </span>
-        <br />A Web Developer's Tale
+        <span> Building Reliable Web Products </span>
+        <br />From Database to Interface
         {/* <span> Good Business</span> */}
       </AboutComponent.HeadText>
       <AboutComponent.SubHeadText>
