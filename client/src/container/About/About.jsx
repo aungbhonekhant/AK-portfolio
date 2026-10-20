@@ -45,7 +45,7 @@ const About = () => {
         {/* <span> Good Business</span> */}
       </AboutComponent.HeadText>
       <AboutComponent.SubHeadText>
-        I'm a Web Developer base Yangon, Myanmar with 5 years of experience
+        I'm a Web Developer based in Yangon, Myanmar with 5 years of experience
         building innovative and user-friendly web applications. I'm skilled in
         JavaScript, React, Node.js, PHP, and Laravel, and have worked on various
         projects. My approach to development is collaborative, and I place a

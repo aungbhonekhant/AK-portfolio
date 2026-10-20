@@ -25,7 +25,7 @@ const Hero = () => {
         </SideEleContainer>
         <div>
           <HeroHeadText>
-            Hi, I'm <span>AungKhant</span>
+            Hi, I'm <span>Aung Khant</span>
           </HeroHeadText>
           <HeroSubText>
             A versatile developer skilled in <HeroSubBreak />

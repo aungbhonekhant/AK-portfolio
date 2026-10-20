@@ -75,6 +75,7 @@ export const HeroHeadText = styled.h1`
 
   span {
     color: #33fbff;
+    white-space: nowrap;
   }
 
   @media screen and (max-width: 300px) {

@@ -26,7 +26,7 @@ const Skills = () => {
   return (
     <>
       <SkillComponent.HeadText>
-        Skills & <span>Experiance</span>
+        Skills & <span>Experience</span>
       </SkillComponent.HeadText>
       <SkillComponent.SkillsContainer>
         <SkillComponent.Lists>
