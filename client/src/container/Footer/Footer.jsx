@@ -76,7 +76,7 @@ const Footer = () => {
       <FooterComponent.HeadText>
         <span>Contact Me,</span>
         <br />
-        Let's Make Magic Together
+        Let's Build Something Together
       </FooterComponent.HeadText>
       <FooterComponent.Cards>
         <FooterComponent.Card

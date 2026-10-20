@@ -45,12 +45,15 @@ const About = () => {
         {/* <span> Good Business</span> */}
       </AboutComponent.HeadText>
       <AboutComponent.SubHeadText>
-        I'm a Web Developer based in Yangon, Myanmar with 5 years of experience
-        building innovative and user-friendly web applications. I'm skilled in
-        JavaScript, React, Node.js, PHP, and Laravel, and have worked on various
-        projects. My approach to development is collaborative, and I place a
-        strong emphasis on user experience and efficiency. Let's work together
-        to bring your vision to life!
+        I'm a full-stack developer based in Yangon, Myanmar, with over seven
+        years of professional experience designing and building web
+        applications, RESTful APIs and content management systems. My core
+        stack is Laravel, Node.js, React and Vue, backed by MySQL and MongoDB.
+        I have delivered multi-vendor e-commerce platforms, an SMS and OTP
+        gateway, and a blockchain-backed precious-metals trading API, working
+        closely with designers, product owners and engineers from requirements
+        through release. I focus on maintainable code, reliable systems and a
+        consistent user experience.
       </AboutComponent.SubHeadText>
       <AboutComponent.Profiles>
         {abouts.map((about, index) => (

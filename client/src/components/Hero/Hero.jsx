@@ -9,7 +9,6 @@ import {
   HeroSection,
   HeroHeadText,
   HeroSubText,
-  HeroSubBreak,
   LoadMore,
   LoadMoreMouse,
   LoadMoreMouseWheel,
@@ -28,8 +27,8 @@ const Hero = () => {
             Hi, I'm <span>Aung Khant</span>
           </HeroHeadText>
           <HeroSubText>
-            A versatile developer skilled in <HeroSubBreak />
-            backend, frontend, full-stack, and web development.
+            A full-stack developer building web apps, APIs and admin systems
+            with Laravel, Node.js and React.
           </HeroSubText>
         </div>
       </HeroContainer>
