@@ -9,3 +9,6 @@
 
 # logs
 *.log
+
+# local dataset exports (contain contact form submissions)
+/sanity-export
