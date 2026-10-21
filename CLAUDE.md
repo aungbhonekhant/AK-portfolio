@@ -100,6 +100,5 @@ To add a content type: create the schema in `backend/schemas/`, add it to `schem
 - `container/Work`: the category filter does `work.tags.includes(item)` on an array of `{name, color}` objects, so every filter except "All" shows nothing. The categories are hard-coded. `animateCard` state is set but never used.
 - `container/Testimonial`: `{testimonials.length && …}` renders a literal `0` when there are no testimonials.
 - `container/About`: the module-level `abouts` array (referencing nonexistent `images.about01`…) is dead code, shadowed by state.
-- Undefined theme keys: `theme.primry` (typo, `components/Work/style/Work.js`) and `theme.grayColor` (`globelStyle.js`).
-- `SocialMedia` icons are not links.
+- Undefined theme key: `theme.primry` (typo, `components/Work/style/Work.js`).
 - `React.StrictMode` is commented out in `src/index.jsx`.

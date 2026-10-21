@@ -100,7 +100,7 @@ export const Social = styled.div`
 
   padding: 1rem;
 
-  div {
+  a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -117,7 +117,7 @@ export const Social = styled.div`
     svg {
       width: 15px;
       height: 15px;
-      color: ${({ theme }) => theme.grayColor};
+      color: #aaa6c3;
     }
 
     &:hover {

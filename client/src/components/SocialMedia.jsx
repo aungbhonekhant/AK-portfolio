@@ -1,20 +1,26 @@
 import React from "react";
-import { BsLinkedin, BsGithub } from "react-icons/bs";
-import { FaFacebookF } from "react-icons/fa";
+import { BsGithub } from "react-icons/bs";
 import { Social } from "./globelStyle";
+
+const links = [
+  { label: "GitHub", url: "https://github.com/aungbhonekhant", Icon: BsGithub },
+];
 
 const SocialMedia = () => {
   return (
     <Social>
-      <div style={{ color: "#aaa6c3" }}>
-        <BsLinkedin />
-      </div>
-      <div style={{ color: "#aaa6c3" }}>
-        <FaFacebookF />
-      </div>
-      <div style={{ color: "#aaa6c3" }}>
-        <BsGithub />
-      </div>
+      {links.map(({ label, url, Icon }) => (
+        <a
+          key={label}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          title={label}
+        >
+          <Icon />
+        </a>
+      ))}
     </Social>
   );
 };
