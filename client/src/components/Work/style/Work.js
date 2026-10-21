@@ -131,6 +131,11 @@ export const WorkPortfolioItemInfoTechs = styled.div`
 
   p {
     font-size: 14px;
-    color: ${({ theme }) => theme.main};
+    /* Sanity tag color, softened toward the body text so it isn't neon */
+    color: color-mix(
+      in srgb,
+      var(--tag-color, ${({ theme }) => theme.main}) 50%,
+      ${({ theme }) => theme.lightGrayColor}
+    );
   }
 `;

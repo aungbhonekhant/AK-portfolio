@@ -57,7 +57,7 @@ const PortfolioCard = ({
         </WorkComponent.PortfolioItemInfo>
         <WorkComponent.PortfolioItemInfoTechs>
           {tags.map((tag, index) => (
-            <p key={index}>
+            <p style={{ "--tag-color": `#${tag.color}` }} key={index}>
               #{tag.name}
             </p>
           ))}

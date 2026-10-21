@@ -89,7 +89,7 @@ Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or f
 | `brands.js` | `brands` | `name`, `imgUrl` | Testimonial |
 | `contact.js` | `contact` | `name`, `email`, `message` | Footer (write) |
 
-`workExperience` is an `object` type used only inline inside `experiences.works`. `tags[].color` is stored as hex without `#`, but the client no longer uses it: all tags render in the theme accent.
+`workExperience` is an `object` type used only inline inside `experiences.works`. `tags[].color` is stored as hex without `#`; the client passes it as a `--tag-color` CSS variable and `color-mix`es it 50% with `lightGrayColor`, so tags stay colored but muted.
 
 The contact form (`container/Footer`) first calls `client.create({ _type: "contact", … })` and only sends the EmailJS email inside its `.then`. The client has no token, and Sanity normally rejects unauthenticated writes. In that case the email is never sent, and since there's no `.catch`, the button stays on "Sending".
 
