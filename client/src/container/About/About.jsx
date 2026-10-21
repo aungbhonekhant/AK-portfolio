@@ -45,18 +45,12 @@ const About = () => {
         {/* <span> Good Business</span> */}
       </AboutComponent.HeadText>
       <AboutComponent.SubHeadText>
-        Most of my work lives where a product meets the people who run it: the
-        APIs, admin panels and workflows that let a business list, sell,
-        finance and report without friction. Over seven years that has meant
-        multi-vendor e-commerce platforms, an SMS and OTP gateway, a
-        blockchain-backed precious-metals trading API and, at FazWaz,
-        self-listing, alternative-financing and AI property-search features for
-        a real-estate marketplace across Southeast Asia and the Middle East. I
-        work mostly in Laravel, Vue.js, React and Node.js, reach for Python when
-        a manual task should be automated, and work in Agile teams alongside
-        designers and product owners. What I care about stays the same from
-        project to project: code the next developer can read, systems that hold
-        up under real use, and features people find easy to use.
+        Behind every listing that goes live in minutes, every checkout that
+        just works and every report that adds up, there's a system someone
+        designed with care. That's the part I build. For over seven years I've
+        turned complex business workflows into reliable web products, from
+        e-commerce platforms and payment gateways to real-estate, financing and
+        AI-powered search tools.
       </AboutComponent.SubHeadText>
       <AboutComponent.Profiles>
         {abouts.map((about, index) => (

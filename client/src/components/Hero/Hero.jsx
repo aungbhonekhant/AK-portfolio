@@ -27,8 +27,7 @@ const Hero = () => {
             Hi, I'm <span>Aung Khant</span>
           </HeroHeadText>
           <HeroSubText>
-            A full-stack developer building web apps, APIs and admin systems
-            with Laravel, Vue.js and Node.js.
+            Full-stack developer building the web products businesses run on.
           </HeroSubText>
         </div>
       </HeroContainer>

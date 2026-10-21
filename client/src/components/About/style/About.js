@@ -15,6 +15,9 @@ export const AboutSubHeadText = styled(Ptext)`
   margin-top: 1rem;
   text-align: center;
   line-height: 1.5rem;
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
 
   padding: 0 2rem;
 

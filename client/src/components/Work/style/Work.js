@@ -46,6 +46,7 @@ export const WorkFilterItem = styled.div`
 export const WorkPortfolio = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin-top: 1rem;
   gap: 1.75rem;
 `;
