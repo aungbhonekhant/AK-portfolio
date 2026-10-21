@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { images } from "../../constants";
+import { MdOutlineEmail, MdOutlinePhoneIphone } from "react-icons/md";
 import { AppWrap, MotionWrap } from "../../wrapper";
 import { client } from "../../client";
 import { FooterComponent } from "../../components";
@@ -85,7 +85,7 @@ const Footer = () => {
           whileInView="show"
           // viewport={{ once: true, amount: 0.25 }}
         >
-          <img src={images.email} alt="email" />
+          <MdOutlineEmail aria-hidden="true" />
           <FooterComponent.SpecialAnchor href="mailto:aungbhonekhant.dev@gmail.com">
             aungbhonekhant.dev@gmail.com
           </FooterComponent.SpecialAnchor>
@@ -97,7 +97,7 @@ const Footer = () => {
           whileInView="show"
           // viewport={{ once: true, amount: 0.25 }}
         >
-          <img src={images.mobile} alt="mobile" />
+          <MdOutlinePhoneIphone aria-hidden="true" />
           <FooterComponent.SpecialAnchor href="tel: +95 9776612936">
             +95 9776612936
           </FooterComponent.SpecialAnchor>

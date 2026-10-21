@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { AppFlex, greenGradient } from "../../globelStyle";
+import { AppFlex } from "../../globelStyle";
 
 export const HeroSection = styled.section`
   position: relative;
@@ -54,10 +54,15 @@ export const ElementCircle = styled.div`
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 100%;
-  background-color: #5edce0;
+  background-color: ${({ theme }) => theme.main};
 `;
 
-export const ElementVtLine = styled(greenGradient)`
+export const ElementVtLine = styled.div`
+  background: linear-gradient(
+    to bottom,
+    ${({ theme }) => theme.main},
+    transparent
+  );
   width: 0.25rem;
   height: 10rem;
 
@@ -69,12 +74,12 @@ export const ElementVtLine = styled(greenGradient)`
 export const HeroHeadText = styled.h1`
   margin-top: 0.5rem;
   font-weight: 900;
-  color: #ffffff;
+  color: ${({ theme }) => theme.white};
   font-size: 35px;
   font-family: "Poppins", sans-serif;
 
   span {
-    color: #33fbff;
+    color: ${({ theme }) => theme.main};
     white-space: nowrap;
   }
 
@@ -97,7 +102,7 @@ export const HeroHeadText = styled.h1`
 `;
 
 export const HeroSubText = styled.p`
-  color: #dfd9ff;
+  color: ${({ theme }) => theme.lightGrayColor};
   font-weight: 500;
   font-size: 16px;
 
@@ -148,7 +153,7 @@ export const LoadMoreMouse = styled.div`
   width: 35px;
   height: 64px;
   border-radius: 1.5rem;
-  border: 4px solid #aaa6c3;
+  border: 4px solid ${({ theme }) => theme.secondary};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,7 +170,7 @@ export const LoadMoreMouseWheel = styled(motion.div)`
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 100%;
-  background-color: #aaa6c3;
+  background-color: ${({ theme }) => theme.secondary};
   margin-bottom: 0.25rem;
 
   @media screen and (max-width: 449px) {

@@ -15,15 +15,17 @@ export const modernLightTheme = {
 };
 
 export const modernTheme = {
-  primary: "#050816", // #0a192f
-  secondary: "#aaa6c3",
-  tertiary: "#151030",
-  main: "#33FBFF", // #64ffda
-  white: "#ffffff",
-  lightGrayColor: "#e4e4e4",
-  softBlack: "#2B2F42",
-  primaryBg: "#050816",
-  secondaryBg: "#0E0C1C",
+  primary: "#0F1113",
+  secondary: "#9AA1A9",
+  tertiary: "#1A1D21",
+  main: "#8FB8AD",
+  white: "#E9ECEF",
+  lightGrayColor: "#C9CED4",
+  softBlack: "#1A1D21",
+  line: "#2A2F35",
+  subtle: "#3D444C",
+  primaryBg: "#0F1113",
+  secondaryBg: "#14171A",
   "black-100": "#100d25",
   "black-200": "#090325",
   "white-100": "#f3f3f3",

@@ -65,9 +65,9 @@ Inside sections, per-item animation uses the variant factories in `src/Utils/mot
 
 ### Styling / theme
 
-All styling is styled-components; there's no CSS framework, and `index.css` only does a reset and loads the font. `src/Utils/Theme.js` defines `modernTheme` (dark) and `modernLightTheme`. Use theme keys (`primary`, `secondary`, `tertiary`, `main` = cyan accent, `primaryBg`, `secondaryBg`, `softBlack`, `white`, …) through `${({ theme }) => theme.x}`. Shared primitives such as `AppContainer`, `HeadText`, `Ptext`, `BoldText`, background wrappers and gradients live in `components/globelStyle.js`. styled-components 6 forwards every prop to the DOM, so styling-only props must be transient (`$active`, `$toggle`). Breakpoints are hard-coded per file, commonly 450/500px (mobile), 940px (desktop nav) and 2000px (large screens).
+All styling is styled-components; there's no CSS framework, and `index.css` only does a reset and loads the font. `src/Utils/Theme.js` defines `modernTheme` (dark) and `modernLightTheme`. Use theme keys (`primary`, `secondary`, `tertiary`, `main` = muted sage accent, `line` = borders, `subtle`, `primaryBg`, `secondaryBg`, `softBlack`, `white`, …) through `${({ theme }) => theme.x}`. Shared primitives such as `AppContainer`, `HeadText`, `Ptext`, `BoldText`, background wrappers and gradients live in `components/globelStyle.js`. styled-components 6 forwards every prop to the DOM, so styling-only props must be transient (`$active`, `$toggle`). Breakpoints are hard-coded per file, commonly 450/500px (mobile), 940px (desktop nav) and 2000px (large screens).
 
-`App.js` keeps `darkMode` state, but nothing toggles it, so only the dark theme is ever used. Several colors are also hard-coded (the Nav background, the loader, `SocialMedia` icon color), so the light theme is incomplete.
+`App.js` keeps `darkMode` state, but nothing toggles it, so only the dark theme is ever used. The dark theme is a minimal graphite palette with a single sage accent (`#8FB8AD`); the light theme was never updated to match. A few colors are still hard-coded: the translucent Nav and hero-overlay backgrounds, the loader, and the accent in `assets/logo.svg`/`menu.svg`/`close.svg` and the generated FazWaz project covers in Sanity. Keep them in sync when changing the accent.
 
 ### Hero / 3D
 
@@ -89,7 +89,7 @@ Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or f
 | `brands.js` | `brands` | `name`, `imgUrl` | Testimonial |
 | `contact.js` | `contact` | `name`, `email`, `message` | Footer (write) |
 
-`workExperience` is an `object` type used only inline inside `experiences.works`. `tags[].color` is stored as hex without `#`, because the client prepends it.
+`workExperience` is an `object` type used only inline inside `experiences.works`. `tags[].color` is stored as hex without `#`, but the client no longer uses it: all tags render in the theme accent.
 
 The contact form (`container/Footer`) first calls `client.create({ _type: "contact", … })` and only sends the EmailJS email inside its `.then`. The client has no token, and Sanity normally rejects unauthenticated writes. In that case the email is never sent, and since there's no `.catch`, the button stays on "Sending".
 
@@ -100,5 +100,4 @@ To add a content type: create the schema in `backend/schemas/`, add it to `schem
 - `container/Work`: the category filter does `work.tags.includes(item)` on an array of `{name, color}` objects, so every filter except "All" shows nothing. The categories are hard-coded. `animateCard` state is set but never used.
 - `container/Testimonial`: `{testimonials.length && …}` renders a literal `0` when there are no testimonials.
 - `container/About`: the module-level `abouts` array (referencing nonexistent `images.about01`…) is dead code, shadowed by state.
-- Undefined theme key: `theme.primry` (typo, `components/Work/style/Work.js`).
 - `React.StrictMode` is commented out in `src/index.jsx`.

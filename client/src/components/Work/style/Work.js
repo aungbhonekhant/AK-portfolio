@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 
-import { HeadText, blackGradient } from "../../globelStyle";
+import { HeadText } from "../../globelStyle";
 
 export const Container = styled(motion.div)`
   flex: 1;
@@ -22,8 +22,8 @@ export const WorkFilter = styled.div`
 export const WorkFilterItem = styled.div`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.primry};
-  border: 1px solid ${({ theme }) => theme.secondary};
+  background-color: transparent;
+  border: 1px solid ${({ theme }) => theme.line};
   color: ${({ theme }) => theme.secondary};
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -54,6 +54,7 @@ export const WorkPortfolio = styled.div`
 export const WorkPortfolioItem = styled(motion.div)``;
 export const WorkPortfolioItemContainer = styled(Tilt)`
   background-color: ${({ theme }) => theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.line};
   padding: 1.25rem;
   border-radius: 1rem;
   width: 100%;
@@ -88,8 +89,8 @@ export const WorkPortfolioItemAction = styled.div`
   margin: 0.75rem;
 `;
 
-export const WorkPortfolioItemActionItem = styled(blackGradient)`
-  opacity: 0.8;
+export const WorkPortfolioItemActionItem = styled.div`
+  background-color: rgba(15, 17, 19, 0.75);
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 100%;
@@ -130,5 +131,6 @@ export const WorkPortfolioItemInfoTechs = styled.div`
 
   p {
     font-size: 14px;
+    color: ${({ theme }) => theme.main};
   }
 `;

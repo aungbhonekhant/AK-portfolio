@@ -18,7 +18,9 @@ export const Nav = styled(AppFlex).attrs({ as: "nav" })`
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
   width: 100%;
-  background-color: #191c2cd4;
+  background-color: rgba(15, 17, 19, 0.82);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid ${({ theme }) => theme.line};
 
   font-family: "Poppins", sans-serif;
 
@@ -54,7 +56,7 @@ export const LogoLink = styled(Link)`
 export const LogoTitle = styled.p`
   display: flex;
   font-weight: bold;
-  color: #ffffff;
+  color: ${({ theme }) => theme.white};
   font-size: 18px;
   cursor: pointer;
 
@@ -123,8 +125,8 @@ export const MobileNev = styled.div`
 `;
 
 export const MobileNevContainer = styled(motion.div)`
-  background: #000000;
-  background: linear-gradient(to right, #213335, #000000);
+  background-color: ${({ theme }) => theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.line};
   display: ${({ $toggle }) => ($toggle ? "flex" : "none")};
   padding: 1.5rem;
   position: absolute;

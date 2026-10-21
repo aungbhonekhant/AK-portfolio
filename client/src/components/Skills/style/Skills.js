@@ -62,7 +62,7 @@ export const SkillIconContainer = styled(AppFlex)`
   }
 
   &:hover {
-    box-shadow: 0 0 25px #fef4f5;
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.main};
   }
 
   @media screen and (min-width: 2000px) {

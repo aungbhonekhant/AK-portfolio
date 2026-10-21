@@ -106,7 +106,7 @@ export const Social = styled.div`
     border-radius: 50%;
     background-color: ${({ theme }) => theme.softBlack};
     margin: 0.25rem 0;
-    border: 1px solid #0bf3f326;
+    border: 1px solid ${({ theme }) => theme.line};
 
     display: flex;
     justify-content: center;
@@ -117,7 +117,7 @@ export const Social = styled.div`
     svg {
       width: 15px;
       height: 15px;
-      color: #aaa6c3;
+      color: ${({ theme }) => theme.secondary};
     }
 
     &:hover {
@@ -163,7 +163,7 @@ export const NavigationDotsStyle = styled.a`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #cbcbcb;
+  background-color: ${({ theme }) => theme.subtle};
   margin: 0.5rem;
 
   transition: background-color 0.2s ease-in-out;

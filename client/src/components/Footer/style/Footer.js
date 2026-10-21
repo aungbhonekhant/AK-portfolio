@@ -38,38 +38,24 @@ export const FooterCard = styled(motion.div)`
   padding: 1rem;
   border-radius: 10px;
   cursor: pointer;
-  background-color: #ffc0cb;
-  box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.05),
-    10px 10px 20px rgba(0, 0, 0, 0.5),
-    inset -5px -5px 10px rgba(255, 255, 255, 0.05),
-    inset 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.tertiary};
+  border: 1px solid ${({ theme }) => theme.line};
+  transition: border-color 0.3s ease-in-out;
 
-  /* transition: all 0.3s ease-in-out; */
-
-  img {
-    width: 40px;
-    height: 40px;
-    margin: 0 0.7rem;
+  svg {
+    width: 22px;
+    height: 22px;
+    margin: 0 0.9rem 0 0.4rem;
+    color: ${({ theme }) => theme.main};
+    flex-shrink: 0;
   }
 
   &:hover {
-    box-shadow: 0 0 15px rgba(254, 244, 245, 0.2);
+    border-color: ${({ theme }) => theme.main};
   }
 
   @media screen and (max-width: 450px) {
     width: 100%;
-  }
-
-  &:last-child {
-    background-color: #bee3f8;
-    box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.05),
-      10px 10px 20px rgba(0, 0, 0, 0.5),
-      inset -5px -5px 10px rgba(255, 255, 255, 0.05),
-      inset 5px 5px 10px rgba(0, 0, 0, 0.5);
-
-    &:hover {
-      box-shadow: 0 0 15px rgba(242, 247, 251, 0.2);
-    }
   }
 `;
 
@@ -95,8 +81,11 @@ export const FooterInputContainer = styled(AppFlex)`
 
   transition: all 0.3s ease-in-out;
 
-  &:hover {
-    box-shadow: 0 0 7px ${({ theme }) => theme.main};
+  border: 1px solid ${({ theme }) => theme.line};
+
+  &:hover,
+  &:focus-within {
+    border-color: ${({ theme }) => theme.main};
   }
 
   @media screen and (max-width: 768px) {
@@ -137,8 +126,10 @@ export const FooterSubmitBtn = styled(Ptext).attrs({ as: "button" })`
   transition: cubic-bezier(0.55, 0.085, 0.68, 0.53);
   cursor: pointer;
 
+  border: 1px solid ${({ theme }) => theme.line};
+
   &:hover {
-    box-shadow: 0 0 7px ${({ theme }) => theme.main};
+    border-color: ${({ theme }) => theme.main};
     color: ${({ theme }) => theme.main};
   }
 `;
