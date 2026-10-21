@@ -48,11 +48,14 @@ const About = () => {
         I'm a full-stack developer based in Yangon, Myanmar, with over seven
         years of professional experience designing and building web
         applications, RESTful APIs and content management systems. My core
-        stack is Laravel, Node.js, React and Vue, backed by MySQL and MongoDB.
-        I have delivered multi-vendor e-commerce platforms, an SMS and OTP
-        gateway, and a blockchain-backed precious-metals trading API, working
-        closely with designers, product owners and engineers from requirements
-        through release. I focus on maintainable code, reliable systems and a
+        stack is Laravel, Vue.js, React and Node.js, backed by MySQL, with
+        Python for automation. Most recently at FazWaz, a real-estate
+        marketplace for Southeast Asia and the Middle East, I built
+        self-listing, alternative financing and AI property-search features. Before that I delivered
+        multi-vendor e-commerce platforms, an SMS and OTP gateway, and a
+        blockchain-backed precious-metals trading API. I work closely with
+        designers, product owners and engineers from requirements through
+        release, and I focus on maintainable code, reliable systems and a
         consistent user experience.
       </AboutComponent.SubHeadText>
       <AboutComponent.Profiles>

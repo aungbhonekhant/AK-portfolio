@@ -33,18 +33,22 @@ const PortfolioCard = ({
           <WorkComponent.PortfolioItemImg src={urlFor(imgUrl)} alt={title} />
           <WorkComponent.PortfolioItemAction>
             {/* github link icon */}
-            <WorkComponent.PortfolioItemActionItem
-              onClick={() => window.open(codeLink, "_blank")}
-            >
-              <AiFillGithub />
-            </WorkComponent.PortfolioItemActionItem>
+            {codeLink && (
+              <WorkComponent.PortfolioItemActionItem
+                onClick={() => window.open(codeLink, "_blank")}
+              >
+                <AiFillGithub />
+              </WorkComponent.PortfolioItemActionItem>
+            )}
 
             {/* live website icon */}
-            <WorkComponent.PortfolioItemActionItem
-              onClick={() => window.open(projectLink, "_blank")}
-            >
-              <AiFillEye />
-            </WorkComponent.PortfolioItemActionItem>
+            {projectLink && (
+              <WorkComponent.PortfolioItemActionItem
+                onClick={() => window.open(projectLink, "_blank")}
+              >
+                <AiFillEye />
+              </WorkComponent.PortfolioItemActionItem>
+            )}
           </WorkComponent.PortfolioItemAction>
         </WorkComponent.PortfolioItemWarp>
         <WorkComponent.PortfolioItemInfo>
@@ -70,7 +74,7 @@ const Work = () => {
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
 
   useEffect(() => {
-    const query = '*[_type == "works"]';
+    const query = '*[_type == "works"] | order(_createdAt desc)';
     client.fetch(query).then((data) => {
       setWorks(data);
       setFilterWork(data);

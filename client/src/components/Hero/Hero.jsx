@@ -28,7 +28,7 @@ const Hero = () => {
           </HeroHeadText>
           <HeroSubText>
             A full-stack developer building web apps, APIs and admin systems
-            with Laravel, Node.js and React.
+            with Laravel, Vue.js and Node.js.
           </HeroSubText>
         </div>
       </HeroContainer>

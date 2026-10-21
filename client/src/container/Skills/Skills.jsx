@@ -12,7 +12,7 @@ const Skills = () => {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    const query = '*[_type == "experiences"]';
+    const query = '*[_type == "experiences"] | order(year desc)';
     const skillsQuery = '*[_type == "skills"]';
 
     client.fetch(query).then((data) => {
@@ -32,7 +32,7 @@ const Skills = () => {
         <SkillComponent.Lists>
           {skills.map((skill, index) => (
             <SkillComponent.ListItems
-              variants={zoomIn(index * 0.5, 0.75)}
+              variants={zoomIn(index * 0.1, 0.75)}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
