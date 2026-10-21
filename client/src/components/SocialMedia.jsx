@@ -1,8 +1,13 @@
 import React from "react";
-import { BsGithub } from "react-icons/bs";
+import { BsGithub, BsLinkedin } from "react-icons/bs";
 import { Social } from "./globelStyle";
 
 const links = [
+  {
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/in/aung-bhone-khant",
+    Icon: BsLinkedin,
+  },
   { label: "GitHub", url: "https://github.com/aungbhonekhant", Icon: BsGithub },
 ];
 
