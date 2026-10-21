@@ -45,18 +45,18 @@ const About = () => {
         {/* <span> Good Business</span> */}
       </AboutComponent.HeadText>
       <AboutComponent.SubHeadText>
-        I'm a full-stack developer based in Yangon, Myanmar, with over seven
-        years of professional experience designing and building web
-        applications, RESTful APIs and content management systems. My core
-        stack is Laravel, Vue.js, React and Node.js, backed by MySQL, with
-        Python for automation. Most recently at FazWaz, a real-estate
-        marketplace for Southeast Asia and the Middle East, I built
-        self-listing, alternative financing and AI property-search features. Before that I delivered
-        multi-vendor e-commerce platforms, an SMS and OTP gateway, and a
-        blockchain-backed precious-metals trading API. I work closely with
-        designers, product owners and engineers from requirements through
-        release, and I focus on maintainable code, reliable systems and a
-        consistent user experience.
+        Most of my work lives where a product meets the people who run it: the
+        APIs, admin panels and workflows that let a business list, sell,
+        finance and report without friction. Over seven years that has meant
+        multi-vendor e-commerce platforms, an SMS and OTP gateway, a
+        blockchain-backed precious-metals trading API and, at FazWaz,
+        self-listing, alternative-financing and AI property-search features for
+        a real-estate marketplace across Southeast Asia and the Middle East. I
+        work mostly in Laravel, Vue.js, React and Node.js, reach for Python when
+        a manual task should be automated, and work in Agile teams alongside
+        designers and product owners. What I care about stays the same from
+        project to project: code the next developer can read, systems that hold
+        up under real use, and features people find easy to use.
       </AboutComponent.SubHeadText>
       <AboutComponent.Profiles>
         {abouts.map((about, index) => (
