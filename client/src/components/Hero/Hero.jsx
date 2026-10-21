@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { AppWrap } from "../../wrapper";
-import { ComputersCanvas } from "../canvas";
+import { WireframeCanvas } from "../canvas";
 import {
   ElementVtLine,
   ElementCircle,
@@ -15,6 +15,7 @@ import {
 } from "./style/Hero";
 
 const Hero = () => {
+  const textRef = useRef(null);
   return (
     <HeroSection>
       <HeroContainer>
@@ -22,7 +23,7 @@ const Hero = () => {
           <ElementCircle />
           <ElementVtLine />
         </SideEleContainer>
-        <div>
+        <div ref={textRef}>
           <HeroHeadText>
             Hi, I'm <span>Aung Khant</span>
           </HeroHeadText>
@@ -32,7 +33,7 @@ const Hero = () => {
         </div>
       </HeroContainer>
 
-      <ComputersCanvas />
+      <WireframeCanvas avoid={textRef} />
 
       <LoadMore>
         <a href="#about">

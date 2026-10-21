@@ -1,3 +1,3 @@
-import ComputersCanvas from "./Computers/Computers";
+import WireframeCanvas from "./Wireframe/Wireframe";
 
-export { ComputersCanvas };
+export { WireframeCanvas };

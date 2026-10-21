@@ -7,4 +7,3 @@ export { default as TestimonialComponent } from "./Teastimonial/Testimonial";
 export { default as FooterComponent } from "./Footer/Footer";
 export { default as NavigationDots } from "./NavigationDots";
 export { default as SocialMedia } from "./SocialMedia";
-export { default as CanvasLoader } from "./Loader/Loader";
