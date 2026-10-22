@@ -2,17 +2,20 @@ import React, { useState } from "react";
 
 import { MdOutlineEmail, MdOutlinePhoneIphone } from "react-icons/md";
 import { AppWrap, MotionWrap } from "../../wrapper";
-import { client } from "../../client";
 import { FooterComponent } from "../../components";
 import { PrimaryBg } from "../../components/globelStyle";
 import { slideIn } from "../../Utils/motion";
-import emailjs from "@emailjs/browser";
+
+// Submissions go to Netlify Forms; the matching static form lives in
+// index.html so Netlify registers "contact" at deploy time.
+const encode = (data) => new URLSearchParams(data).toString();
 
 const Footer = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    "bot-field": "",
   });
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
@@ -27,48 +30,25 @@ const Footer = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setIsErr(false);
 
-    const contact = {
-      _type: "contact",
-      name,
-      email,
-      message,
-    };
-    const serviceId = import.meta.env.REACT_APP_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.REACT_APP_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY;
-
-    client.create(contact).then(() => {
-      emailjs
-        .send(
-          serviceId,
-          templateId,
-          {
-            from_name: name,
-            to_name: "Aung Khant",
-            from_email: email,
-            to_email: "aungbhonekhant.dev@gmail.com",
-            message: message,
-          },
-          publicKey
-        )
-        .then(
-          () => {
-            setLoading(false);
-            setIsFormSubmitted(true);
-            setIsErr(false);
-          },
-          (error) => {
-            setLoading(false);
-            console.error(error);
-
-            setIsErr(true);
-          }
-        );
-    });
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", ...formData }),
+      });
+      if (!res.ok) throw new Error(`Form submit failed: ${res.status}`);
+      setIsFormSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      setIsErr(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -104,52 +84,69 @@ const Footer = () => {
         </FooterComponent.Card>
       </FooterComponent.Cards>
 
-      {!isErr ? (
-        !isFormSubmitted ? (
-          <FooterComponent.Form>
-            <FooterComponent.FooterInputContainer>
-              <FooterComponent.FormInput
-                type="text"
-                name="name"
-                placeholder="Your name"
-                value={name}
-                onChange={handleChangeInput}
-              />
-            </FooterComponent.FooterInputContainer>
+      {!isFormSubmitted ? (
+        <FooterComponent.Form
+          name="contact"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="hidden"
+            name="bot-field"
+            value={formData["bot-field"]}
+            onChange={handleChangeInput}
+          />
+          <FooterComponent.FooterInputContainer>
+            <FooterComponent.FormInput
+              type="text"
+              name="name"
+              placeholder="Your name"
+              aria-label="Your name"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={handleChangeInput}
+            />
+          </FooterComponent.FooterInputContainer>
 
-            <FooterComponent.FooterInputContainer>
-              <FooterComponent.FormInput
-                type="text"
-                name="email"
-                placeholder="Your email"
-                value={email}
-                onChange={handleChangeInput}
-              />
-            </FooterComponent.FooterInputContainer>
+          <FooterComponent.FooterInputContainer>
+            <FooterComponent.FormInput
+              type="email"
+              name="email"
+              placeholder="Your email"
+              aria-label="Your email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={handleChangeInput}
+            />
+          </FooterComponent.FooterInputContainer>
 
-            <FooterComponent.FooterInputContainer>
-              <FooterComponent.FormTextarea
-                placeholder="Your message"
-                value={message}
-                name="message"
-                onChange={handleChangeInput}
-              />
-            </FooterComponent.FooterInputContainer>
-            <FooterComponent.SubmitBtn type="button" onClick={handleSubmit}>
-              {loading ? "Sending" : "Send Message"}
-            </FooterComponent.SubmitBtn>
-          </FooterComponent.Form>
-        ) : (
-          <div>
-            <FooterComponent.HeadText>
-              Thank you for getting in touch!
-            </FooterComponent.HeadText>
-          </div>
-        )
+          <FooterComponent.FooterInputContainer>
+            <FooterComponent.FormTextarea
+              placeholder="Your message"
+              aria-label="Your message"
+              required
+              value={message}
+              name="message"
+              onChange={handleChangeInput}
+            />
+          </FooterComponent.FooterInputContainer>
+          <FooterComponent.SubmitBtn type="submit" disabled={loading}>
+            {loading ? "Sending..." : "Send Message"}
+          </FooterComponent.SubmitBtn>
+          {isErr && (
+            <FooterComponent.FormError role="alert">
+              Sorry, your message couldn't be sent. Please try again, or email
+              me directly at aungbhonekhant.dev@gmail.com.
+            </FooterComponent.FormError>
+          )}
+        </FooterComponent.Form>
       ) : (
         <div>
           <FooterComponent.HeadText>
-            Ahh, something went wrong. Please try again.
+            Thank you for getting in touch!
           </FooterComponent.HeadText>
         </div>
       )}

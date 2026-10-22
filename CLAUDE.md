@@ -35,12 +35,15 @@ Linting is a separate step in both packages; builds don't run it. `client/eslint
 
 Vite-specific notes for the client: files containing JSX must use `.jsx`; `index.html` lives in `client/` (not `public/`) and loads `/src/index.jsx`; Vite's bundler fails on imports of names that don't exist (CRA only warned).
 
+### Deployment
+
+Netlify (site `aungkhant`, https://aungkhant.netlify.app) builds from GitHub `main` on every push, using `netlify.toml` at the repo root (base `client`, `yarn build`, publish `build`, Node 22). Settings in that file override the Netlify dashboard. Sanity content changes need no deploy: the site fetches them at runtime.
+
 ### Env vars (`client/.env`, gitignored; template in `client/.env.example`)
 
-- `REACT_APP_SANITY_PROJECT_ID=243wh60p`, used by `src/client.js`. The `production` dataset is publicly readable, and Sanity CORS allows `http://localhost:3000`, so the site loads real content locally with only this set.
-- `REACT_APP_EMAILJS_SERVICE_ID`, `REACT_APP_EMAILJS_TEMPLATE_ID`, `REACT_APP_EMAILJS_PUBLIC_KEY`, used by `container/Footer`. Only the contact form needs them.
+`REACT_APP_SANITY_PROJECT_ID=243wh60p`, used by `src/client.js`. The `production` dataset is publicly readable, and Sanity CORS allows `http://localhost:3000`, so the site loads real content locally with only this set.
 
-`vite.config.js` sets `envPrefix: "REACT_APP_"`, so the CRA-era names still work and Netlify's env settings didn't need to change. Read them with `import.meta.env.REACT_APP_*` (not `process.env`). They're inlined at build time; restart `yarn start` after editing `.env`.
+`vite.config.js` sets `envPrefix: "REACT_APP_"`, so the CRA-era name still works. Read env vars with `import.meta.env.REACT_APP_*` (not `process.env`). They're inlined at build time; restart `yarn start` after editing `.env`.
 
 ## Client architecture
 
@@ -87,11 +90,11 @@ Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or f
 | `experiences.js` | `experiences` | `year`, `works[]` (each a `workExperience`: `name`, `company`, `desc[] {text}`) | Skills |
 | `tstmol.js` | `testimonials` | `name`, `company`, `image`, `feedback` | Testimonial |
 | `brands.js` | `brands` | `name`, `imgUrl` | Testimonial |
-| `contact.js` | `contact` | `name`, `email`, `message` | Footer (write) |
+| `contact.js` | `contact` | `name`, `email`, `message` | unused (old contact form) |
 
 `workExperience` is an `object` type used only inline inside `experiences.works`. `tags[].color` is stored as hex without `#`; the client passes it as a `--tag-color` CSS variable and `color-mix`es it 50% with `lightGrayColor`, so tags stay colored but muted.
 
-The contact form (`container/Footer`) first calls `client.create({ _type: "contact", … })` and only sends the EmailJS email inside its `.then`. The client has no token, and Sanity normally rejects unauthenticated writes. In that case the email is never sent, and since there's no `.catch`, the button stays on "Sending".
+The contact form (`container/Footer`) posts to Netlify Forms (`fetch("/")`, url-encoded, `form-name=contact`, honeypot `bot-field`). Netlify only accepts it because a hidden static copy of the form sits in `client/index.html`, which Netlify parses at deploy time; keep its field names in sync with the React form. Locally the POST returns 404, so the form shows its error message; it only works on the deployed site. Submissions and email notifications are managed in the Netlify dashboard (Forms). The `contact` Sanity schema is no longer written to.
 
 To add a content type: create the schema in `backend/schemas/`, add it to `schemas/index.js`, deploy or run the Studio, then query it from a container.
 

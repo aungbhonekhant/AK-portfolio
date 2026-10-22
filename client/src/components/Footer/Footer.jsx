@@ -9,6 +9,7 @@ import {
   SpecialAnchor,
   FooterFormTextarea,
   FooterSubmitBtn,
+  FooterFormError,
 } from "./style/Footer";
 
 const Footer = ({ children, ...restProps }) => {
@@ -49,6 +50,10 @@ Footer.FormTextarea = ({ children, ...restProps }) => {
 
 Footer.SubmitBtn = ({ children, ...restProps }) => {
   return <FooterSubmitBtn {...restProps}>{children}</FooterSubmitBtn>;
+};
+
+Footer.FormError = ({ children, ...restProps }) => {
+  return <FooterFormError {...restProps}>{children}</FooterFormError>;
 };
 
 export default Footer;

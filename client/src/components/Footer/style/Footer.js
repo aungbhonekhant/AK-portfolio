@@ -66,7 +66,7 @@ export const SpecialAnchor = styled(Ptext).attrs({ as: "a" })`
   color: ${({ theme }) => theme.white};
 `;
 
-export const FooterForm = styled(AppFlex)`
+export const FooterForm = styled(AppFlex).attrs({ as: "form" })`
   width: 80%;
   flex-direction: column;
   margin: 0rem 2rem 1rem;
@@ -128,8 +128,18 @@ export const FooterSubmitBtn = styled(Ptext).attrs({ as: "button" })`
 
   border: 1px solid ${({ theme }) => theme.line};
 
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: ${({ theme }) => theme.main};
     color: ${({ theme }) => theme.main};
   }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
+`;
+export const FooterFormError = styled(Ptext)`
+  margin-top: 1rem;
+  text-align: center;
+  color: ${({ theme }) => theme.lightGrayColor};
 `;
