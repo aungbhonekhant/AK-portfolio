@@ -19,7 +19,8 @@ export const WorkFilter = styled.div`
 
   margin: 3rem 0 2rem;
 `;
-export const WorkFilterItem = styled.div`
+export const WorkFilterItem = styled.button`
+  font: inherit;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   background-color: transparent;
@@ -73,6 +74,7 @@ export const WorkPortfolioItemWarp = styled.div`
 export const WorkPortfolioItemImg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: 1rem;
 `;
 

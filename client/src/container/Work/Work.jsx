@@ -18,7 +18,7 @@ const PortfolioCard = ({
 }) => {
   return (
     <WorkComponent.PortfolioItem
-      variants={fadeIn("up", "spring", index * 0.5, 0.75)}
+      variants={fadeIn("up", "tween", (index % 3) * 0.1, 0.5)}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
@@ -30,7 +30,12 @@ const PortfolioCard = ({
         transitionSpeed={450}
       >
         <WorkComponent.PortfolioItemWarp>
-          <WorkComponent.PortfolioItemImg src={urlFor(imgUrl)} alt={title} />
+          <WorkComponent.PortfolioItemImg
+            src={urlFor(imgUrl).width(720).auto("format").url()}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+          />
           <WorkComponent.PortfolioItemAction>
             {/* github link icon */}
             {codeLink && (
@@ -67,33 +72,34 @@ const PortfolioCard = ({
   );
 };
 
+// Each filter matches projects that have any of its tag names.
+const FILTERS = [
+  { label: "All" },
+  { label: "Laravel", tags: ["laravel"] },
+  { label: "Vue.js", tags: ["vuejs"] },
+  { label: "Node.js", tags: ["nodejs"] },
+  { label: "APIs", tags: ["api"] },
+  { label: "Automation & AI", tags: ["automation", "llm"] },
+];
+
 const Work = () => {
   const [works, setWorks] = useState([]);
-  const [filterWork, setFilterWork] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All");
-  const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
 
   useEffect(() => {
     const query = '*[_type == "works"] | order(_createdAt desc)';
     client.fetch(query).then((data) => {
       setWorks(data);
-      setFilterWork(data);
     });
   }, []);
 
-  const handleWorkFilter = (item) => {
-    setActiveFilter(item);
-    setAnimateCard([{ y: 100, opacity: 0 }]);
-    setTimeout(() => {
-      setAnimateCard([{ y: 0, opacity: 1 }]);
+  const filterTags = FILTERS.find((f) => f.label === activeFilter)?.tags;
+  const filterWork = filterTags
+    ? works.filter((work) =>
+        work.tags?.some((tag) => filterTags.includes(tag.name))
+      )
+    : works;
 
-      if (item === "All") {
-        setFilterWork(works);
-      } else {
-        setFilterWork(works.filter((work) => work.tags.includes(item)));
-      }
-    }, 500);
-  };
   return (
     <>
       <WorkComponent.HeadText>
@@ -101,19 +107,20 @@ const Work = () => {
         <span> Portfolios </span>
       </WorkComponent.HeadText>
       <WorkComponent.Filter>
-        {["UI/UX", "Web App", "Mobile App", "React Js", "All"].map(
-          (cat, index) => (
-            <WorkComponent.FilterItem
-              $active={activeFilter === cat}
-              key={index}
-              onClick={() => handleWorkFilter(cat)}
-            >
-              {cat}
-            </WorkComponent.FilterItem>
-          )
-        )}
+        {FILTERS.map(({ label }) => (
+          <WorkComponent.FilterItem
+            type="button"
+            $active={activeFilter === label}
+            aria-pressed={activeFilter === label}
+            key={label}
+            onClick={() => setActiveFilter(label)}
+          >
+            {label}
+          </WorkComponent.FilterItem>
+        ))}
       </WorkComponent.Filter>
-      <WorkComponent.Portfolio>
+      {/* keyed by filter so the cards replay their entrance on change */}
+      <WorkComponent.Portfolio key={activeFilter}>
         {filterWork.map((work, index) => (
           <PortfolioCard
             index={index}
@@ -122,8 +129,8 @@ const Work = () => {
             projectLink={work.projectLink}
             codeLink={work.codeLink}
             imgUrl={work.imgUrl}
-            tags={work.tags}
-            key={`portfolio-${index}`}
+            tags={work.tags ?? []}
+            key={work._id}
           />
         ))}
       </WorkComponent.Portfolio>

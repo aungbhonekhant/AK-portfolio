@@ -78,15 +78,15 @@ All styling is styled-components; there's no CSS framework, and `index.css` only
 
 ## Sanity data flow
 
-`src/client.js` exports `client` (`@sanity/client`, `useCdn: true`, API version `2023-01-01`, empty token) and `urlFor(source)` (`@sanity/image-url`). Image fields are passed to `urlFor()` directly as `src`.
+`src/client.js` exports `client` (`@sanity/client`, `useCdn: true`, API version `2023-01-01`, empty token) and `urlFor(source)` (`@sanity/image-url`). Image fields are passed to `urlFor()`; project cards request a resized copy (`urlFor(img).width(720).auto("format").url()`), elsewhere the builder is passed directly as `src`.
 
-Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or filters. The `_type` must equal the `name` in `backend/schemas/*.js`, and every type must be listed in `schemaTypes` in `backend/schemas/index.js`. File names don't always match type names:
+Queries are plain GROQ `*[_type == "<name>"]` with no projections. Works are ordered by `_createdAt desc`, experiences by `year desc`, and skills by their `order` number (set in Studio; lowest first, spaced by 10). The `_type` must equal the `name` in `backend/schemas/*.js`, and every type must be listed in `schemaTypes` in `backend/schemas/index.js`. File names don't always match type names:
 
 | Schema file | `_type` | Fields used by client | Used in |
 |---|---|---|---|
 | `about.js` | `abouts` | `title`, `description`, `imgUrl` | About |
 | `works.js` | `works` | `title`, `description`, `projectLink`, `codeLink`, `imgUrl`, `tags[] {name, color}` | Work |
-| `skills.js` | `skills` | `name`, `bgColor`, `icon` | Skills |
+| `skills.js` | `skills` | `order`, `name`, `bgColor`, `icon` | Skills |
 | `experiences.js` | `experiences` | `year`, `works[]` (each a `workExperience`: `name`, `company`, `desc[] {text}`) | Skills |
 | `tstmol.js` | `testimonials` | `name`, `company`, `image`, `feedback` | Testimonial |
 | `brands.js` | `brands` | `name`, `imgUrl` | Testimonial |
@@ -96,11 +96,12 @@ Queries are plain GROQ `*[_type == "<name>"]` with no projections, ordering or f
 
 The contact form (`container/Footer`) posts to Netlify Forms (`fetch("/")`, url-encoded, `form-name=contact`, honeypot `bot-field`). Netlify only accepts it because a hidden static copy of the form sits in `client/index.html`, which Netlify parses at deploy time; keep its field names in sync with the React form. Locally the POST returns 404, so the form shows its error message; it only works on the deployed site. Submissions and email notifications are managed in the Netlify dashboard (Forms). The `contact` Sanity schema is no longer written to.
 
+The project filter in `container/Work` is a hard-coded `FILTERS` list; each entry matches works that have any of its tag `name`s (e.g. `vuejs`, `api`), so new filters must use tag names that exist in Sanity.
+
 To add a content type: create the schema in `backend/schemas/`, add it to `schemas/index.js`, deploy or run the Studio, then query it from a container.
 
 ## Known issues (found by reading the code)
 
-- `container/Work`: the category filter does `work.tags.includes(item)` on an array of `{name, color}` objects, so every filter except "All" shows nothing. The categories are hard-coded. `animateCard` state is set but never used.
 - `container/Testimonial`: `{testimonials.length && …}` renders a literal `0` when there are no testimonials.
 - `container/About`: the module-level `abouts` array (referencing nonexistent `images.about01`…) is dead code, shadowed by state.
 - `React.StrictMode` is commented out in `src/index.jsx`.
